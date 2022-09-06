@@ -11,8 +11,9 @@
         <h1 class="display-4">Welcome</h1>
         <p>There are no styles applies here. Please upload the files.</p>
         <p>Balances: <input type="file" name="balance" /></p><br>
-        <p>Payments: <input type="file" name="payments" /></p><br>
-        <p>File format: 
+        <p>Payments: <input type="file" name="payment" /></p><br>
+        <p>Account ID: <input type="text" name="accountId"/></p><br>
+        <p>Returned file format: 
         @Html.DropDownListFor(m => m.Format,
             new SelectList(Enum.GetValues(typeof(JFS_Task.FileFormat))))
         <input type="submit" value="Ok" />
