@@ -6,12 +6,10 @@ namespace JFS_Task.Pages
     public class IndexModel : PageModel
     {
         public FileFormat Format;
+        public Period ReportPeriod;
 
-        private readonly ILogger<IndexModel> _logger;
-
-        public IndexModel(ILogger<IndexModel> logger)
+        public IndexModel()
         {
-            _logger = logger;
         }
 
         public void OnGet()

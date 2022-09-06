@@ -2,17 +2,21 @@
 @using JFS_Task.Pages
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Error";
 }
 
-@using (Html.BeginForm("GetBalances", "Balances", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("GetBalances", "Index", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     <div class="text-center">
         <h1 class="display-4">Welcome</h1>
         <p>There are no styles applies here. Please upload the files.</p>
         <p>Balances: <input type="file" name="balance" /></p><br>
         <p>Payments: <input type="file" name="payment" /></p><br>
-        <p>Account ID: <input type="text" name="accountId"/></p><br>
+        <p>Account ID: <input type="text" name="accountId" /></p><br>
+        <p>Period:
+            @Html.DropDownListFor(m => m.ReportPeriod,
+            new SelectList(Enum.GetValues(typeof(JFS_Task.Period))))
+        </p>
         <p>Returned file format: 
         @Html.DropDownListFor(m => m.Format,
             new SelectList(Enum.GetValues(typeof(JFS_Task.FileFormat))))
