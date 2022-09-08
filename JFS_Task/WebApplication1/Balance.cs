@@ -34,7 +34,7 @@ namespace JFS_Task
             double calculation)
         {
             AccountId = account_id;
-            Period = DateTime.ParseExact(period, DATETIMEPATTERN, CultureInfo.InvariantCulture).ToUniversalTime();
+            Period = DateTime.SpecifyKind(DateTime.ParseExact(period, DATETIMEPATTERN, CultureInfo.InvariantCulture), DateTimeKind.Utc);
             InBalance = in_balance;
             Calculation = calculation;
         }

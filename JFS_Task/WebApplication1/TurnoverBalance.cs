@@ -13,5 +13,9 @@ namespace JFS_Task
         public double Paid { get; set; }
         public double EndingBalance { get; set; }
 
+        public void CalculateEndingBalance()
+        {
+            EndingBalance = StartingBalance + Accrued - Paid;
+        }
     }
 }

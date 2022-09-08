@@ -1,8 +1,9 @@
 ﻿@page
+@using JFS_Task
 @using JFS_Task.Pages
 @model IndexModel
 @{
-    ViewData["Title"] = "Error";
+    ViewData["Title"] = "Home page";
 }
 
 @using (Html.BeginForm("GetBalances", "Index", FormMethod.Post, new { enctype = "multipart/form-data" }))
@@ -30,4 +31,27 @@
     <div class="text-center">
         <h3>@TempData["Message"]</h3>
     </div>
+}
+
+@if (ViewData["Report"] != null && ViewData["Report"] is List<TurnoverBalance> turnoverBalance)
+{
+    <table border="1" cellpadding="2" cellspacing="2">
+        <tr>
+            <th>Period</th>
+            <th>StartingBalance</th>
+            <th>Accrued</th>
+            <th>Paid</th>
+            <th>EndingBalance</th>
+        </tr>
+        @foreach (TurnoverBalance turnoverBalanceRecord in turnoverBalance)
+        {
+            <tr>
+                <td>@turnoverBalanceRecord.Period</td>
+                <td>@turnoverBalanceRecord.StartingBalance</td>
+                <td>@turnoverBalanceRecord.Accrued</td>
+                <td>@turnoverBalanceRecord.Paid</td>
+                <td>@turnoverBalanceRecord.EndingBalance</td>
+            </tr>
+        }
+    </table>
 }

@@ -2,12 +2,17 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore.ValueGeneration.Internal;
 using Microsoft.Extensions.Logging;
+using Microsoft.VisualBasic;
 
 namespace JFS_Task
 {
     public class IndexController : Controller
     {
+        [ViewData]
+        public List<TurnoverBalance> TurnoverReport { get; set; }
+
         private const string BalancesListName = "balance";
         private const string PaymentsListName = "";
 
@@ -17,13 +22,6 @@ namespace JFS_Task
         {
             _dataAccessProvider = dataAccessProvider;
         }
-
-        // GET: IndexController
-        public ActionResult Index()
-        {
-            return View();
-        }
-
 
         [HttpPost("GetBalances")]
         public ActionResult GetBalances(    // Lots of parameters here
@@ -55,19 +53,77 @@ namespace JFS_Task
             _dataAccessProvider.AddPaymentBulk(payments);
             payments.Clear();
 
-            // Compiling report
+            // Compiling report from balances and payments lists ordered by a period date
             balances = _dataAccessProvider.GetBalances(accountId);
             payments = _dataAccessProvider.GetPayments(accountId);
 
-            List<TurnoverBalance> turnoverReport = new();
+            TurnoverReport = new();
+
+            // Here we will keep track of the values
+            TurnoverBalance? currentTurnover = null;
+
+            // We will skip the set amount of records using this pointer. Alternatively we could remove them on the spot to improve RAM usage
+            // We could also use deferred execution to read the DB in chunks to improve RAM usage further, however this should be done on
+            // data access framework level and implemented for all DB tables. Probably something like that already exists, but I won't bother with it for now.
+
+            int monthsPassed = 0;
+            DateTime? periodEnd = null;
+            
             balances.ForEach(b =>
             {
-                // report?
+                if (currentTurnover == null)
+                {
+                    // It means that we are at the new period
+                    currentTurnover = new()
+                    {
+                        Period = b.Period,
+                        StartingBalance = b.InBalance,
+                        Accrued = 0,
+                        Paid = 0
+                    };
+
+                    switch (reportPeriod)
+                    {
+                        case Period.Month:
+                            periodEnd = b.Period.AddMonths(1);                                                      // Set to next month's 1st day
+                            break;
+                        case Period.Quarter:
+                            int quarterNumber = (b.Period.Month - 1) / 3 + 1;
+                            periodEnd = new DateTime(b.Period.Year, (quarterNumber - 1) * 3 + 1, 1).AddMonths(3);   // Set to next quarter's 1st day
+                            break;
+                        case Period.Year:
+                            periodEnd = new DateTime(b.Period.Year + 1, 1, 1);                                      // Set to next year's 1st day
+                            break;
+                        default:
+                            throw new NotSupportedException("This report does not support the " + reportPeriod + " period type");
+                    }
+
+                    monthsPassed = 0;
+                }
+
+                foreach (Payment p in payments
+                    .SkipWhile(p => p.Date < currentTurnover.Period)                // Not interested in payments outside period
+                    .TakeWhile(p => p.Date < currentTurnover.Period.AddMonths(1)))  // Each minor period is 1 month
+                {
+                    currentTurnover.Paid += p.Sum;
+                }
+
+                monthsPassed++;
+                if (currentTurnover.Period.AddMonths(monthsPassed) == periodEnd)
+                {
+                    currentTurnover.Accrued = b.Calculation;
+                    currentTurnover.CalculateEndingBalance();
+
+                    TurnoverReport.Add(currentTurnover);
+                    currentTurnover = null;
+                    monthsPassed = 0;
+                }
             });
 
-            TempData["Message"] = "Controller executed; accountID: " + accountId;
+            //ViewResult result = View("~/Pages/index.cshtml");
+            //ViewData["Title"] = "Home page";
 
-            return Redirect("~/"); ;
+            return View();
 
         }
     }
