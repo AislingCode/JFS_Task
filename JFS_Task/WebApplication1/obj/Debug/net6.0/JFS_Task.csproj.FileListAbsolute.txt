@@ -26,3 +26,11 @@ C:\git\JFS_Task\JFS_Task\WebApplication1\obj\Debug\net6.0\JFS_Task.genruntimecon
 C:\git\JFS_Task\JFS_Task\WebApplication1\obj\Debug\net6.0\ref\JFS_Task.dll
 C:\git\JFS_Task\JFS_Task\WebApplication1\bin\Debug\net6.0\Newtonsoft.Json.dll
 C:\git\JFS_Task\JFS_Task\WebApplication1\obj\Debug\net6.0\JFS_Task.csproj.CopyComplete
+C:\git\JFS_Task\JFS_Task\WebApplication1\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.dll
+C:\git\JFS_Task\JFS_Task\WebApplication1\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+C:\git\JFS_Task\JFS_Task\WebApplication1\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Relational.dll
+C:\git\JFS_Task\JFS_Task\WebApplication1\bin\Debug\net6.0\Microsoft.Extensions.Caching.Memory.dll
+C:\git\JFS_Task\JFS_Task\WebApplication1\bin\Debug\net6.0\Npgsql.dll
+C:\git\JFS_Task\JFS_Task\WebApplication1\bin\Debug\net6.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
+C:\git\JFS_Task\JFS_Task\WebApplication1\bin\Debug\net6.0\Humanizer.dll
+C:\git\JFS_Task\JFS_Task\WebApplication1\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Design.dll

@@ -34,7 +34,7 @@ namespace JFS_Task
                 using StreamReader sr = new(s);
                 using JsonReader reader = new JsonTextReader(sr);
 
-                JSONParserSM stateMachine = new() { ArrayName = listName, State = listName == null ? State.LookingForObject : State.LookingForArray };
+                JSONParserSM stateMachine = new() { ArrayName = listName, State = listName == "" ? State.LookingForObject : State.LookingForArray };
 
                 while (reader.Read())
                 {

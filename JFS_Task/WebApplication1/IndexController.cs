@@ -8,8 +8,15 @@ namespace JFS_Task
 {
     public class IndexController : Controller
     {
-        private readonly string BalancesListName = "balance";
-        private readonly string PaymentsListName = "";
+        private const string BalancesListName = "balance";
+        private const string PaymentsListName = "";
+
+        private readonly IDataAccessProvider _dataAccessProvider;
+
+        public IndexController(IDataAccessProvider dataAccessProvider)
+        {
+            _dataAccessProvider = dataAccessProvider;
+        }
 
         // GET: IndexController
         public ActionResult Index()
@@ -19,20 +26,25 @@ namespace JFS_Task
 
 
         [HttpPost("GetBalances")]
-        public ActionResult GetBalances(    // Lots of parameters here.
+        public ActionResult GetBalances(    // Lots of parameters here
             IFormFile balance,
             IFormFile payment,
-            string accountId,
+            int accountId,
             FileFormat format,
             Period reportPeriod)
         {
-            // Parsing files
+            // Clearing data
+            _dataAccessProvider.ClearAllData();
+
+            // Parsing files & filling tables
             List<Balance>? balances = JsonSerializerHelper.DeserializeObjectsList<Balance>(BalancesListName, balance);
             if (balances == null)
             {
                 TempData["Message"] = "There seems to be a problem with balances file.";
                 return Redirect("~/");
             }
+            _dataAccessProvider.AddBalanceBulk(balances);
+            balances.Clear();
 
             List<Payment>? payments = JsonSerializerHelper.DeserializeObjectsList<Payment>(PaymentsListName, payment);
             if (payments == null)
@@ -40,6 +52,18 @@ namespace JFS_Task
                 TempData["Message"] = "There seems to be a problem with payments file.";
                 return Redirect("~/");
             }
+            _dataAccessProvider.AddPaymentBulk(payments);
+            payments.Clear();
+
+            // Compiling report
+            balances = _dataAccessProvider.GetBalances(accountId);
+            payments = _dataAccessProvider.GetPayments(accountId);
+
+            List<TurnoverBalance> turnoverReport = new();
+            balances.ForEach(b =>
+            {
+                // report?
+            });
 
             TempData["Message"] = "Controller executed; accountID: " + accountId;
 

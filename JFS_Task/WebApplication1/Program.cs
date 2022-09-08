@@ -1,8 +1,12 @@
+using JFS_Task;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddMvc();
+builder.Services.AddDbContext<DomainModelPostgreSqlContext>();
+builder.Services.AddScoped<IDataAccessProvider, DataAccessProvider>();
 
 var app = builder.Build();
 
