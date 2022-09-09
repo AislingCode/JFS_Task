@@ -5,7 +5,8 @@
     /// </summary>
     public enum FileFormat
     {
-        XML = 0,
-        CSV = 1
+        None = 0,
+        XML = 1,
+        CSV = 2
     }
 }

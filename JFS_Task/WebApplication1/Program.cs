@@ -7,6 +7,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddMvc();
 builder.Services.AddDbContext<DomainModelPostgreSqlContext>();
 builder.Services.AddScoped<IDataAccessProvider, DataAccessProvider>();
+builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 

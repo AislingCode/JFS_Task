@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report>
+  <Line>
+    <Period>2019-01-01T00:00:00Z</Period>
+    <StartingBalance>9480.45</StartingBalance>
+    <Accrued>43743.55</Accrued>
+    <Paid>0</Paid>
+    <EndingBalance>53224</EndingBalance>
+  </Line>
+  <Line>
+    <Period>2020-01-01T00:00:00Z</Period>
+    <StartingBalance>4198.42</StartingBalance>
+    <Accrued>39097.350000000006</Accrued>
+    <Paid>50621.039999999986</Paid>
+    <EndingBalance>-7325.269999999982</EndingBalance>
+  </Line>
+</Report>

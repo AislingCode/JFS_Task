@@ -1,8 +1,0 @@
-C:\git\JFS_Task\JFS_Task\WebApplication1\obj\Debug\net6.0\WebApplication.csproj.AssemblyReference.cache
-C:\git\JFS_Task\JFS_Task\WebApplication1\obj\Debug\net6.0\WebApplication.GeneratedMSBuildEditorConfig.editorconfig
-C:\git\JFS_Task\JFS_Task\WebApplication1\obj\Debug\net6.0\WebApplication.AssemblyInfoInputs.cache
-C:\git\JFS_Task\JFS_Task\WebApplication1\obj\Debug\net6.0\WebApplication.AssemblyInfo.cs
-C:\git\JFS_Task\JFS_Task\WebApplication1\obj\Debug\net6.0\WebApplication.csproj.CoreCompileInputs.cache
-C:\git\JFS_Task\JFS_Task\WebApplication1\obj\Debug\net6.0\WebApplication.MvcApplicationPartsAssemblyInfo.cache
-C:\git\JFS_Task\JFS_Task\WebApplication1\obj\Debug\net6.0\WebApplication.RazorAssemblyInfo.cache
-C:\git\JFS_Task\JFS_Task\WebApplication1\obj\Debug\net6.0\WebApplication.RazorAssemblyInfo.cs

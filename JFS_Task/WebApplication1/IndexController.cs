@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore.ValueGeneration.Internal;
 using Microsoft.Extensions.Logging;
 using Microsoft.VisualBasic;
+using System.Xml.Linq;
 
 namespace JFS_Task
 {
@@ -101,6 +102,10 @@ namespace JFS_Task
                     monthsPassed = 0;
                 }
 
+                // Adding accrued amount for current month
+                currentTurnover.Accrued += b.Calculation;
+
+                // Adding all payments for current month
                 foreach (Payment p in payments
                     .SkipWhile(p => p.Date < currentTurnover.Period)                // Not interested in payments outside period
                     .TakeWhile(p => p.Date < currentTurnover.Period.AddMonths(1)))  // Each minor period is 1 month
@@ -109,9 +114,10 @@ namespace JFS_Task
                 }
 
                 monthsPassed++;
+
+                // When we reach the end of a period, a new 
                 if (currentTurnover.Period.AddMonths(monthsPassed) == periodEnd)
                 {
-                    currentTurnover.Accrued = b.Calculation;
                     currentTurnover.CalculateEndingBalance();
 
                     TurnoverReport.Add(currentTurnover);
@@ -120,11 +126,38 @@ namespace JFS_Task
                 }
             });
 
-            //ViewResult result = View("~/Pages/index.cshtml");
-            //ViewData["Title"] = "Home page";
+            if (format == FileFormat.XML)
+            {
+                // Generating and returning XML file
+                XElement xmlElements = new XElement("Report", TurnoverReport.Select(l => new XElement("Line",
+                    new XElement("Period", l.Period),
+                    new XElement("StartingBalance", l.StartingBalance),
+                    new XElement("Accrued", l.Accrued),
+                    new XElement("Paid", l.Paid),
+                    new XElement("EndingBalance", l.EndingBalance))));
 
-            return View();
+                string fileName = "report.xml";
+                string filePath = AppDomain.CurrentDomain.BaseDirectory + "tmp\\" + fileName;
+                string fileType = "text/xml";
+                Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + "tmp\\");
+                System.IO.File.Delete(filePath);
+                using (var stream = System.IO.File.Create(filePath))
+                {
+                    xmlElements.Save(stream);
+                }
 
+                return PhysicalFile(filePath, fileType, fileName);
+            }
+            else if (format == FileFormat.CSV)
+            {
+                // Generating and returning CSV file
+                // TBD
+                return View(TurnoverReport);
+            }
+            else
+            {
+                return View(TurnoverReport);
+            }
         }
     }
 }
