@@ -5,6 +5,9 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore.ValueGeneration.Internal;
 using Microsoft.Extensions.Logging;
 using Microsoft.VisualBasic;
+using ServiceStack.Text;
+using System.Text;
+using System.Xml;
 using System.Xml.Linq;
 
 namespace JFS_Task
@@ -151,8 +154,19 @@ namespace JFS_Task
             else if (format == FileFormat.CSV)
             {
                 // Generating and returning CSV file
-                // TBD
-                return View(TurnoverReport);
+                string csv = CsvSerializer.SerializeToCsv(TurnoverReport);
+
+                string fileName = "report.csv";
+                string filePath = AppDomain.CurrentDomain.BaseDirectory + "tmp\\" + fileName;
+                string fileType = "text/csv";
+                Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + "tmp\\");
+                System.IO.File.Delete(filePath);
+                using (var stream = System.IO.File.Create(filePath))
+                {
+                    stream.Write(new UTF8Encoding(true).GetBytes(csv));
+                }
+
+                return PhysicalFile(filePath, fileType, fileName);
             }
             else
             {

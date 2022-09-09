@@ -270,3 +270,4 @@ C:\git\JFS_Task\JFS_Task\WebApplication1\obj\Debug\net6.0\refint\JFS_Task.dll
 C:\git\JFS_Task\JFS_Task\WebApplication1\obj\Debug\net6.0\JFS_Task.pdb
 C:\git\JFS_Task\JFS_Task\WebApplication1\obj\Debug\net6.0\JFS_Task.genruntimeconfig.cache
 C:\git\JFS_Task\JFS_Task\WebApplication1\obj\Debug\net6.0\ref\JFS_Task.dll
+C:\git\JFS_Task\JFS_Task\WebApplication1\bin\Debug\net6.0\ServiceStack.Text.dll

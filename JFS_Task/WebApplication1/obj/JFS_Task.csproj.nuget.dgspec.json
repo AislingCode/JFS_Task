@@ -83,6 +83,10 @@
             "Npgsql.EntityFrameworkCore.PostgreSQL": {
               "target": "Package",
               "version": "[6.0.6, )"
+            },
+            "ServiceStack.Text": {
+              "target": "Package",
+              "version": "[6.3.0, )"
             }
           },
           "imports": [
