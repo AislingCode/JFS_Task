@@ -9,7 +9,7 @@ namespace JFS_Task
     public class Payment
     {
         // Hardcoding this here, since the app will only handle the proposed file format.
-        private const string DATETIMEPATTERN = "yyyy-MM-dd HH:mm:ss";
+        private const string DateTimePattern = "yyyy-MM-dd HH:mm:ss";
 
         [Key]
         public int RecId { get; set; }
@@ -34,7 +34,7 @@ namespace JFS_Task
             string payment_guid)
         {
             AccountId = account_id;
-            Date = DateTime.ParseExact(date, DATETIMEPATTERN, CultureInfo.InvariantCulture).ToUniversalTime();
+            Date = DateTime.ParseExact(date, DateTimePattern, CultureInfo.InvariantCulture).ToUniversalTime();
             Sum = sum;
             PaymentGuid = new Guid(payment_guid);
         }

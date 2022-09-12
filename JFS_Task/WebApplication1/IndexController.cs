@@ -1,13 +1,7 @@
 ﻿using JFS_Task.Pages;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore.ValueGeneration.Internal;
-using Microsoft.Extensions.Logging;
-using Microsoft.VisualBasic;
 using ServiceStack.Text;
 using System.Text;
-using System.Xml;
 using System.Xml.Linq;
 
 namespace JFS_Task
@@ -27,12 +21,18 @@ namespace JFS_Task
             _dataAccessProvider = dataAccessProvider;
         }
 
+        /// <summary>
+        /// I decided to cramp everything in this method, so it is easier to review the workflow. Controller shouldn't really
+        /// deal with some of the tasks present in here, for example, compiling files for entities should be done
+        /// by a separate class instead.
+        /// </summary>
+        /// <exception cref="NotSupportedException"></exception>
         [HttpPost("GetBalances")]
         public ActionResult GetBalances(    // Lots of parameters here
             IFormFile balance,
             IFormFile payment,
             int accountId,
-            FileFormat format,
+            FileFormat format,              // This is not an Accept HTTP header, but this is more convenient anyway
             Period reportPeriod)
         {
             // Clearing data

@@ -2,6 +2,9 @@
 
 namespace JFS_Task
 {
+    /// <summary>
+    /// This is a general data access provider class, which handles everything related to the DB.
+    /// </summary>
     public class DataAccessProvider : IDataAccessProvider
     {
         private readonly DomainModelPostgreSqlContext _context;

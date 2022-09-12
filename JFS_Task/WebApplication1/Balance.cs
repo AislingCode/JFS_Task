@@ -9,7 +9,7 @@ namespace JFS_Task
     public class Balance
     {
         // Hardcoding this here, since the app will only handle the proposed file format.
-        private const string DATETIMEPATTERN = "yyyyMM";
+        private const string DateTimePattern = "yyyyMM";
 
         [Key]
         public int RecId { get; set; }
@@ -34,7 +34,7 @@ namespace JFS_Task
             double calculation)
         {
             AccountId = account_id;
-            Period = DateTime.SpecifyKind(DateTime.ParseExact(period, DATETIMEPATTERN, CultureInfo.InvariantCulture), DateTimeKind.Utc);
+            Period = DateTime.SpecifyKind(DateTime.ParseExact(period, DateTimePattern, CultureInfo.InvariantCulture), DateTimeKind.Utc);
             InBalance = in_balance;
             Calculation = calculation;
         }
